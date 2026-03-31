@@ -5,7 +5,7 @@
 }
 
 header {
-  background-color: rgb(229, 196, 98);
+  background-color: rgb(175, 125, 240);
   color: black;
   display: flex;
   align-items: center;
@@ -94,7 +94,7 @@ body {
 }
 
 footer {
-  background-color: rgb(229, 196, 98);
+  background-color: rgb(175, 125, 240);
   color: black;
 }
 
@@ -112,11 +112,11 @@ footer {
 }
 
 .pagination a.active {
-  background-color: rgb(101, 225, 63);
+  background-color: rgb(124, 206, 206);
   font-weight: bold;
 }
 
 .pagination a:hover:not(active) {
-  background-color: rgb(138, 138, 138);
+  background-color: rgb(84, 147, 164);
   border-radius: 5px;
 }
