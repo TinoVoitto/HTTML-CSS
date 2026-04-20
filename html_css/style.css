@@ -85,6 +85,11 @@ body {
 
 .text-image-container p {
   width: 500px;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  margin: 20px;
+  justify-content: center;
 }
 
 .text-image-container img {
