@@ -1,53 +1,56 @@
 "use strict";
 
-const form = document.querySelector("form");
+let form = document.querySelector("form");
 const query_input = document.getElementById("query");
-const resultsContainer = document.getElementById("print_answer");
+const print_answer = document.getElementById("print_answer");
 
 async function tvInfo(event) {
   event.preventDefault();
+  const response = await fetch(
+    `https://api.tvmaze.com/search/shows?q=${query_input.value}`,
+  );
+  const info = await response.json();
 
-  try {
-    const response = await fetch(
-      `https://api.tvmaze.com/search/shows?q=${query_input.value}`,
-    );
-    const info = await response.json();
+  console.log(info);
+  print_answer.innerHTML = "";
 
-    console.log(info);
+  for (let i = 0; i < info.length; i++) {
+    const tvShow = info[i].show;
 
-    resultsContainer.innerHTML = "";
+    const article = document.createElement("article");
 
-    info.forEach((item) => {
-      const tvShow = item.show;
+    const name = tvShow.name;
+    const url = tvShow.url;
 
-      const article = document.createElement("article");
+    let image = tvShow.image?.medium;
+    if (image == null) {
+      image = "https://placehold.co/210x295?text=Not%20Found";
+    }
 
-      const nameHeader = document.createElement("h2");
-      nameHeader.textContent = tvShow.name;
+    const summary = tvShow.summary;
 
-      const link = document.createElement("a");
-      link.href = tvShow.url;
-      link.target = "_blank";
-      link.textContent = "View Details";
+    const n = document.createElement("h2");
+    n.textContent = name;
 
-      const img = document.createElement("img");
-      img.src = tvShow.image
-        ? tvShow.image.medium
-        : "https://placehold.co/210x295?text=Not%20Found";
-      img.alt = tvShow.name;
+    const u = document.createElement("a");
+    u.href = url;
+    u.textContent = "Details";
+    u.target = "_blank";
 
-      const summaryDiv = document.createElement("div");
-      summaryDiv.innerHTML = tvShow.summary || "No summary available.";
+    const img = document.createElement("img");
+    img.src = image;
+    img.alt = name;
 
-      article.appendChild(nameHeader);
-      article.appendChild(img);
-      article.appendChild(link);
-      article.appendChild(summaryDiv);
+    const s = document.createElement("div");
+    s.innerHTML = summary;
 
-      resultsContainer.appendChild(article);
-    });
-  } catch (error) {
-    console.error("Error fetching data:", error);
+    article.appendChild(n);
+    article.appendChild(img);
+    article.appendChild(document.createElement("br"));
+    article.appendChild(u);
+    article.appendChild(s);
+
+    print_answer.appendChild(article);
   }
 }
 
